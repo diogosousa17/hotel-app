@@ -1,0 +1,20 @@
+{
+    "username" : "Rafinha1",
+    "name" : "Rafael",
+    "email" : "Mudou1",
+    "password" : "rafinha",
+    "nif" : "01234567897",
+    "telemovel" : "917794456",
+    "address" : "Amarante",
+    "userType" : "basic",
+    "reservas" : [
+        {"numeroReserva" : "1", 
+        "extras" : "sla", 
+        "quarto" : "2", 
+        "numeroNoites" : "1",
+        "data" : "2002,12,31", 
+        "valorTotal" : "40", 
+        "tipoReserva" : "pequeno-almoço", 
+        "numeroHospedes" : "1" }
+        ]
+}
