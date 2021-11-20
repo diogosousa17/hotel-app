@@ -24,7 +24,7 @@ function BedroomRouter() {
   });
 
   router.route("/bedroom").get(function (req, res, next) {
-    Bedrooms.findAll().then((bedrooms) => {
+    Bedrooms.findAll(req).then((bedrooms) => {
       res.send(bedrooms);
       next();
     });
