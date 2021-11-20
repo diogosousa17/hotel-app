@@ -1,4 +1,5 @@
 function BedroomService(BedroomModel) {
+  const ITENS_PER_PAGE = 4;
   let service = {
     createBedroom,
     findAll,
@@ -21,12 +22,15 @@ function BedroomService(BedroomModel) {
     });
   }
 
-  function findAll() {
+  function findAll(req) {
+    const { page = 1 } = req.query;
     return new Promise(function (resolve, reject) {
       BedroomModel.find({}, function (err, bedrooms) {
         if (err) reject(err);
         resolve(bedrooms);
-      });
+      })
+        .limit(ITENS_PER_PAGE)
+        .skip((page - 1) * ITENS_PER_PAGE);
     });
   }
 
