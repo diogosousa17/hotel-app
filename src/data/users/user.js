@@ -7,29 +7,29 @@ let UserSchema = new Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   nif: { type: Number, required: true, unique: true },
-  // dateBirthday: { type: Date, required: true},
-  telemovel: { type: Number, required: true },
+  dateBirthday: { type: Date, required: true},
+  phoneNumber: { type: Number, required: true },
   address: { type: String, required: true },
   userType: { type: String, default: "Public" },
-  reservas: [
+  reserves: [
     {
-      numeroReserva: { type: Number, required: true, unique: true },
+      reserveNumber: { type: Number, required: true, unique: true },
       extras: { type: String, required: true },
-      quarto: {
+      bedroom: {
         bedroomNumber: { type: Number, required: true },
         bedroomType: { type: String, required: true, default: "Single" },
         bedsNumber: { type: Number, required: true },
         capacity: { type: Number, required: true },
         price: { type: Number, required: true },
       },
-      numeroNoites: { type: Number, required: true },
-      data: { type: Date, required: true },
-      valorTotal: { type: Number, required: true },
-      tipoReserva: {
+      nightsNumber: { type: Number, required: true },
+      date: { type: Date, required: true },
+      finalPrice: { type: Number, required: true },
+      reserveType: {
         type: ["pequeno-almoço", "pensão completa"],
         required: true,
       },
-      numeroHospedes: { type: Number, required: true },
+      guestsNumber: { type: Number, required: true },
     },
   ],
 });

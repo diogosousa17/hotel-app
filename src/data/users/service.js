@@ -3,17 +3,19 @@ const config = require("../../config");
 const bcrypt = require("bcrypt");
 
 function UserService(UserModel) {
+  const USERS_PER_PAGE = 20;
   let service = {
     createUser,
     saveUser,
     createToken,
     verifyToken,
     findUser,
-    findById,
+    // findById,
     createPassword,
     comparePassword,
     updateUser,
-    removeById,
+    // removeById,
+    // findAllUsers
   };
 
   function createUser(user) {
@@ -42,7 +44,20 @@ function UserService(UserModel) {
     });
   }
 
-  function createToken(user) {
+  // function findAllUsers(req) {
+  //   const { page = 1 } = req.query;
+  //   return new Promise(function (resolve, reject) {
+  //     UserModel.find({}, function (err, users) {
+  //       if (err) reject(err)
+  //       resolve(users)
+  //     })
+  //       .limit(USERS_PER_PAGE)
+  //       .skip((page - 1) * USERS_PER_PAGE)
+  //       .sort([[req.query.orderBy, req.query.direction]]);
+  //   })
+  // }
+
+  function createToken() {
     let token = jwt.sign({}, config.secret, {
       expiresIn: config.expiresPassword,
     });
@@ -80,25 +95,25 @@ function UserService(UserModel) {
     });
   }
 
-  function findById(id) {
-    return new Promise(function (resolve, reject) {
-      UserModel.findById(id, function (err, bedroom) {
-        if (err) reject(err);
-        resolve(bedroom);
-      });
-    });
-  }
+  // function findById(id) {
+  //   return new Promise(function (resolve, reject) {
+  //     UserModel.findById(id, function (err, bedroom) {
+  //       if (err) reject(err);
+  //       resolve(bedroom);
+  //     });
+  //   });
+  // }
 
-  function removeById(id) {
-    return new Promise(function (resolve, reject) {
-      console.log(id);
-      UserModel.findByIdAndRemove(id, function (err) {
-        console.log(err);
-        if (err) reject(err);
-        resolve();
-      });
-    });
-  }
+  // function removeById(id) {
+  //   return new Promise(function (resolve, reject) {
+  //     console.log(id);
+  //     UserModel.findByIdAndRemove(id, function (err) {
+  //       console.log(err);
+  //       if (err) reject(err);
+  //       resolve();
+  //     });
+  //   });
+  // }
 
   function updateUser(id, values) {
     return new Promise(function (resolve, reject) {

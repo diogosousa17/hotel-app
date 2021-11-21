@@ -8,27 +8,29 @@ function BedroomRouter() {
   router.use(bodyParser.json({ limit: "100mb" }));
   router.use(bodyParser.urlencoded({ limit: "100mb", extended: true }));
 
-  router.route("/add").post(function (req, res, next) {
-    let body = req.body;
-    Bedrooms.createBedroom(body)
-      .then(() => {
-        res.status(200);
-        res.send(body);
-        next();
-      })
-      .catch((err) => {
-        err.status = err.status || 500;
-        res.status(401);
+  router.route("/add")
+    .post(function (req, res, next) {
+      let body = req.body;
+      Bedrooms.createBedroom(body)
+        .then(() => {
+          res.status(200);
+          res.send(body);
+          next();
+        })
+        .catch((err) => {
+          err.status = err.status || 500;
+          res.status(401);
+          next();
+        });
+    });
+
+  router.route("/bedroom")
+    .get(function (req, res, next) {
+      Bedrooms.findAll(req).then((bedrooms) => {
+        res.send(bedrooms);
         next();
       });
-  });
-
-  router.route("/bedroom").get(function (req, res, next) {
-    Bedrooms.findAll(req).then((bedrooms) => {
-      res.send(bedrooms);
-      next();
     });
-  });
 
   router
     .route("/bedroom/:bedroomId")
