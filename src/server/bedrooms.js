@@ -1,6 +1,7 @@
 const bodyParser = require("body-parser");
 const express = require("express");
 const Bedrooms = require("../data/bedrooms");
+const authorize = require('../middleware/auth')
 
 function BedroomRouter() {
   let router = express();
@@ -9,7 +10,7 @@ function BedroomRouter() {
   router.use(bodyParser.urlencoded({ limit: "100mb", extended: true }));
 
   router.route("/add")
-    .post(function (req, res, next) {
+    .post(authorize, function (req, res, next) {
       let body = req.body;
       Bedrooms.createBedroom(body)
         .then(() => {
@@ -25,15 +26,14 @@ function BedroomRouter() {
     });
 
   router.route("/bedroom")
-    .get(function (req, res, next) {
+  .get(function (req, res, next) {
       Bedrooms.findAll(req).then((bedrooms) => {
         res.send(bedrooms);
         next();
       });
     });
 
-  router
-    .route("/bedroom/:bedroomId")
+  router.route("/bedroom/:bedroomId")
     .get(function (req, res, next) {
       let bedroomId = req.params.bedroomId;
 
@@ -48,7 +48,7 @@ function BedroomRouter() {
           next();
         });
     })
-    .put(function (req, res, next) {
+    .put(authorize, function (req, res, next) {
       let bedroomId = req.params.bedroomId;
       let body = req.body;
 
@@ -58,7 +58,7 @@ function BedroomRouter() {
         next();
       });
     })
-    .delete(function (req, res, next) {
+    .delete(authorize, function (req, res, next) {
       let bedroomId = req.params.bedroomId;
       Bedrooms.removeById(bedroomId)
         .then(() => {

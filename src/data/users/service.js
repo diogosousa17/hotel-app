@@ -10,12 +10,12 @@ function UserService(UserModel) {
     createToken,
     verifyToken,
     findUser,
-    // findById,
+    findById,
     createPassword,
     comparePassword,
     updateUser,
-    // removeById,
-    // findAllUsers
+    removeById,
+    findAllUsers
   };
 
   function createUser(user) {
@@ -44,21 +44,21 @@ function UserService(UserModel) {
     });
   }
 
-  // function findAllUsers(req) {
-  //   const { page = 1 } = req.query;
-  //   return new Promise(function (resolve, reject) {
-  //     UserModel.find({}, function (err, users) {
-  //       if (err) reject(err)
-  //       resolve(users)
-  //     })
-  //       .limit(USERS_PER_PAGE)
-  //       .skip((page - 1) * USERS_PER_PAGE)
-  //       .sort([[req.query.orderBy, req.query.direction]]);
-  //   })
-  // }
+  function findAllUsers(req) {
+    const { page = 1 } = req.query;
+    return new Promise(function (resolve, reject) {
+      UserModel.find({}, function (err, users) {
+        if (err) reject(err)
+        resolve(users)
+      })
+        .limit(USERS_PER_PAGE)
+        .skip((page - 1) * USERS_PER_PAGE)
+        .sort([[req.query.orderBy, req.query.direction]]);
+    })
+  }
 
-  function createToken() {
-    let token = jwt.sign({}, config.secret, {
+  function createToken(user) {
+    let token = jwt.sign({username: user.username, userType: user.userType}, config.secret, {
       expiresIn: config.expiresPassword,
     });
     return { auth: true, token };
@@ -70,7 +70,6 @@ function UserService(UserModel) {
         if (err) {
           reject();
         }
-
         return resolve(decoded);
       });
     });
@@ -95,25 +94,25 @@ function UserService(UserModel) {
     });
   }
 
-  // function findById(id) {
-  //   return new Promise(function (resolve, reject) {
-  //     UserModel.findById(id, function (err, bedroom) {
-  //       if (err) reject(err);
-  //       resolve(bedroom);
-  //     });
-  //   });
-  // }
+  function findById(id) {
+    return new Promise(function (resolve, reject) {
+      UserModel.findById(id, function (err, bedroom) {
+        if (err) reject(err);
+        resolve(bedroom);
+      });
+    });
+  }
 
-  // function removeById(id) {
-  //   return new Promise(function (resolve, reject) {
-  //     console.log(id);
-  //     UserModel.findByIdAndRemove(id, function (err) {
-  //       console.log(err);
-  //       if (err) reject(err);
-  //       resolve();
-  //     });
-  //   });
-  // }
+  function removeById(id) {
+    return new Promise(function (resolve, reject) {
+      console.log(id);
+      UserModel.findByIdAndRemove(id, function (err) {
+        console.log(err);
+        if (err) reject(err);
+        resolve();
+      });
+    });
+  }
 
   function updateUser(id, values) {
     return new Promise(function (resolve, reject) {
