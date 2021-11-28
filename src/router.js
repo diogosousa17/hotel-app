@@ -1,18 +1,16 @@
-const express = require('express')
-let UsersAPI = require('./server/auth')
-let BedroomAPI = require('./server/bedrooms')
-let PasswordReset = require('./server/passwordReset')
+const express = require("express");
+let UsersAPI = require("./server/auth");
+let BedroomAPI = require("./server/bedrooms");
 
 function initialize() {
-    let api = express()
+  let api = express();
 
-    api.use('/auth', UsersAPI())
-    api.use('/bedrooms', BedroomAPI())
-    // api.use('/passwordReset', PasswordReset)
+  api.use("/auth", UsersAPI());
+  api.use("/bedrooms", BedroomAPI());
 
-    return api
+  return api;
 }
 
 module.exports = {
-    initialize: initialize
-}
+  initialize: initialize,
+};

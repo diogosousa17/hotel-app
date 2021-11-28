@@ -1,0 +1,11 @@
+Rotas 
+/auth/resetPassword - passamos o email
+/auth/register - schema do user
+/auth/allUsers
+/auth/login
+/auth/user/:userid //get post put delete
+
+
+/bedrooms/add
+/bedrooms/bedroom
+/bedrooms/:bedroomId

@@ -1,6 +1,6 @@
-const Bedrooms = require('./bedroom')
-const BedroomService = require('./service')
+const Bedrooms = require("./bedroom");
+const BedroomService = require("./service");
 
-const service = BedroomService(Bedrooms)
+const service = BedroomService(Bedrooms);
 
-module.exports = service
+module.exports = service;

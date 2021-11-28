@@ -1,5 +1,7 @@
 function BedroomService(BedroomModel) {
+  //limit bedroooms per page
   const BEDROOMS_PER_PAGE = 5;
+  //kinda exports
   let service = {
     createBedroom,
     findAll,
@@ -29,12 +31,11 @@ function BedroomService(BedroomModel) {
         if (err) reject(err);
         resolve(bedrooms);
       })
+        //limits bedroom per page and skip when you change page skips 5
         .limit(BEDROOMS_PER_PAGE)
         .skip((page - 1) * BEDROOMS_PER_PAGE)
         .sort([[req.query.orderBy, req.query.direction]]);
-
     });
-
   }
 
   function findById(id) {

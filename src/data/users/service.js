@@ -3,6 +3,7 @@ const config = require("../../config");
 const bcrypt = require("bcrypt");
 
 function UserService(UserModel) {
+  //user per page 20
   const USERS_PER_PAGE = 20;
   let service = {
     createUser,
@@ -15,7 +16,7 @@ function UserService(UserModel) {
     comparePassword,
     updateUser,
     removeById,
-    findAllUsers
+    findAllUsers,
   };
 
   function createUser(user) {
@@ -48,19 +49,24 @@ function UserService(UserModel) {
     const { page = 1 } = req.query;
     return new Promise(function (resolve, reject) {
       UserModel.find({}, function (err, users) {
-        if (err) reject(err)
-        resolve(users)
+        if (err) reject(err);
+        resolve(users);
       })
+        //limits users per page and skip when you change page skips 20
         .limit(USERS_PER_PAGE)
         .skip((page - 1) * USERS_PER_PAGE)
         .sort([[req.query.orderBy, req.query.direction]]);
-    })
+    });
   }
 
   function createToken(user) {
-    let token = jwt.sign({username: user.username, userType: user.userType}, config.secret, {
-      expiresIn: config.expiresPassword,
-    });
+    let token = jwt.sign(
+      { username: user.username, userType: user.userType },
+      config.secret,
+      {
+        expiresIn: config.expiresPassword,
+      }
+    );
     return { auth: true, token };
   }
 
